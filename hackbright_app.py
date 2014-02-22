@@ -46,7 +46,31 @@ def make_new_project(title, description, max_grade):
     CONN.commit()
     print "Successfully added project: %s" % title
 
+def get_grade_by_project(title, student):
+    query = """SELECT grade FROM Grades JOIN Students ON student_github = github lWHERE project_title = ?"""
+    DB.execute(query, (title,))
+    row = DB.fetchone()
+    # print row
+    print """\
+    Grade: %s""" % row[0]    
 
+def give_grade_to_student(student, project, grade):
+    query = """INSERT into Grades VALUES (
+        (SELECT DISTINCT github FROM Students WHERE first_name = ?), ?, ?)"""
+    DB.execute(query, (student, project, grade))
+    CONN.commit()
+    print "Successfully assigned grade of %s to %s for project %s" %(grade, student, project)
+
+def show_all_grades_for_student(student_name):
+    query = """SELECT project_title, grade FROM Grades 
+        WHERE student_github = 
+        (SELECT DISTINCT github FROM Students WHERE first_name = ?)"""  
+    DB.execute(query, (student_name,))
+    rows = DB.fetchall()
+    print rows
+    print '%s\'s grades: ' % student_name
+    for i in rows:
+        print "%s: %s" % (i[0], i[1])
 
 def main():
     connect_to_db()
@@ -68,7 +92,16 @@ def main():
             get_project_by_title(*args)
         elif command == "new_project":
             # need to format for string as second argument 
-            make_new_project(*args)
+            title = args[0]
+            desc = ' '.join(args[1:-1]) 
+            max_grade = args[-1]  
+            make_new_project(title, desc, max_grade)
+        elif command == "get_grade":
+            get_grade_by_project(*args)
+        elif command == "assign_grade":
+            give_grade_to_student(*args)  
+        elif command == "show_student_grades":
+            show_all_grades_for_student(*args)      
 
           
 
