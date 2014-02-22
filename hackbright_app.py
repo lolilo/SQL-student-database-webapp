@@ -9,10 +9,10 @@ def get_student_by_github(github):
     DB.execute(query, (github,))
     row = DB.fetchone()
 
-    # print row
+    # return row
 
     # this '\' tells Python to not worry about whitespace, in this particular instance, a new line
-    print """\
+    return """\
 Student: %s %s
 Github account: %s"""%(row[0], row[1], row[2])
 
@@ -27,14 +27,14 @@ def make_new_student(first_name, last_name, github):
     
     # committing on the database connection, not the cursor
     CONN.commit()
-    print "Successfully added student: %s %s" % (first_name, last_name)
+    return "Successfully added student: %s %s" % (first_name, last_name)
 
 def get_project_by_title(title):
     query = """SELECT * FROM Projects WHERE title = ?"""
     DB.execute(query, (title,))
     row = DB.fetchone()
 
-    print """\
+    return """\
 Project ID: %s
 Project Title: %s
 Project Description: %s
@@ -44,14 +44,14 @@ def make_new_project(title, description, max_grade):
     query = """INSERT into Projects (title, description, max_grade) VALUES (?,?,?)"""
     DB.execute(query, (title, description, max_grade))
     CONN.commit()
-    print "Successfully added project: %s" % title
+    return "Successfully added project: %s" % title
 
 def get_grade_by_project(title, student):
     query = """SELECT grade FROM Grades JOIN Students ON student_github = github lWHERE project_title = ?"""
     DB.execute(query, (title,))
     row = DB.fetchone()
-    # print row
-    print """\
+    # return row
+    return """\
     Grade: %s""" % row[0]    
 
 def give_grade_to_student(student, project, grade):
@@ -59,7 +59,7 @@ def give_grade_to_student(student, project, grade):
         (SELECT DISTINCT github FROM Students WHERE first_name = ?), ?, ?)"""
     DB.execute(query, (student, project, grade))
     CONN.commit()
-    print "Successfully assigned grade of %s to %s for project %s" %(grade, student, project)
+    return "Successfully assigned grade of %s to %s for project %s" %(grade, student, project)
 
 def show_all_grades_for_student(student_name):
     query = """SELECT project_title, grade FROM Grades 
@@ -67,10 +67,10 @@ def show_all_grades_for_student(student_name):
         (SELECT DISTINCT github FROM Students WHERE first_name = ?)"""  
     DB.execute(query, (student_name,))
     rows = DB.fetchall()
-    print rows
-    print '%s\'s grades: ' % student_name
+    # return rows
+    return '%s\'s grades: ' % student_name
     for i in rows:
-        print "%s: %s" % (i[0], i[1])
+        return "%s: %s" % (i[0], i[1])
 
 def main():
     connect_to_db()
