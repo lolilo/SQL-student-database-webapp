@@ -8,13 +8,12 @@ def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
     DB.execute(query, (github,))
     row = DB.fetchone()
-
-    # return row
+    return row
 
     # this '\' tells Python to not worry about whitespace, in this particular instance, a new line
-    return """\
-Student: %s %s
-Github account: %s"""%(row[0], row[1], row[2])
+#     return """\
+# Student: %s %s
+# Github account: %s"""%(row[0], row[1], row[2])
 
 def connect_to_db():
     global DB, CONN
@@ -67,10 +66,11 @@ def show_all_grades_for_student(student_name):
         (SELECT DISTINCT github FROM Students WHERE first_name = ?)"""  
     DB.execute(query, (student_name,))
     rows = DB.fetchall()
-    # return rows
-    return '%s\'s grades: ' % student_name
-    for i in rows:
-        return "%s: %s" % (i[0], i[1])
+    return rows
+    
+    # return '%s\'s grades: ' % student_name
+    # for i in rows:
+    #     return "%s: %s" % (i[0], i[1])
 
 def main():
     connect_to_db()
