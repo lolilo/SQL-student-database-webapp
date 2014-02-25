@@ -1,6 +1,14 @@
 <html>
 <head>
     <style>
+        div#sidemenu {
+        padding: 10px;
+        width: 300px;
+        margin: 20px 0px 20px 20px;
+        float:left;
+        border: solid blue 10px;
+        }
+
         div#wrapper {
             padding: 10px;
             float:left;
@@ -34,6 +42,19 @@
 </head>
 
 <body>
+
+<div id='sidemenu'>
+<p><h3> Information by </h3></p>
+<p> <a href="/"> Student Github       </a></p>
+<p> <a href="/projectlookup"> Project Title       </a></p>
+<p><h3> Add to Database </h3></p>
+<p> <a href="/createstudent"> Add Student       </a></p>
+<p> <a href="/newproject"> Add Project       </a></p>
+<p> <a href="/assigngrade"> Assign Grade      </a></p>
+
+</div> 
+
+
 <h1> Student: {{first_name}} {{last_name}}</h1>
 <h2>Github: {{github}}</h2>
 

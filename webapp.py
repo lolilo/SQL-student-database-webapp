@@ -4,6 +4,11 @@ import hackbright_app
 app = Flask(__name__)
 
 # ASK HOW TO PREVENT SQL INJECTIONS
+# EXPLORE THE DIFFERENCE BETWEEN GET AND POST DATA
+# DON'T NEED TO SPECIFY THAT URL EXPLICITLY??
+# HOW TO ORGANIZE HTML -- I HAS LOTS OF HTML FILES THAT ARE SIMILAR. DAT SIDE MENU.
+# LINKS
+# PRETTINESS
 
 @app.route("/")
 def get_github():
@@ -22,6 +27,12 @@ def get_student():
                                                 project_data = d2)
     return html
 
+
+@app.route("/projectlookup")
+def get_project():
+    html = render_template("get_project.html")
+    return html
+
 @app.route("/projects")
 # page listing all students and their grades for a given project 
 # when clicking on a student's github account, it sends you back to the get_student handler
@@ -32,7 +43,6 @@ def get_grade_by_project():
 
     html = render_template("project_grades.html", project_title = project, project_data = d)
     return html
-
 
 @app.route("/createstudent")
 def make_new_student():
