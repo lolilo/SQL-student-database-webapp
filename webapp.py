@@ -34,12 +34,6 @@ def get_grade_by_project():
 
 @app.route("/createstudent")
 def make_new_student():
-#     html = """<form action="/some_webpage" method="GET">
-#     First Name: <input type="text" name="first_name">
-#     Last Name: <input type="text" name="last_name">
-#     Github: <input type="text" name="github">
-# </form>"""
-
     html = render_template("create_student.html")
     return html
 
@@ -75,6 +69,12 @@ def made_new_project():
     html = "Project %s has been added to the database." % title
     return html
 
+
+# TO DO
+# Make a handler that allows a user to grade a student on a given project.
+# Add links to pages that allow you to navigate the entirety of the app 
+# you should never have to manually enter a URL to reach a particular handler.
+# Make it look pretty.
 
 if __name__ == "__main__":
     # if running, call flask as our main loop 
