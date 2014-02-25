@@ -65,11 +65,13 @@ def get_grade_by_project(title):
     # Grade: %s""" % row[0]    
 
 def give_grade_to_student(student, project, grade):
+    # if this student does not have a github, it will not populate the first column in Grades
+    # first column in Grades is github
     query = """INSERT into Grades VALUES (
         (SELECT DISTINCT github FROM Students WHERE first_name = ?), ?, ?)"""
     DB.execute(query, (student, project, grade))
     CONN.commit()
-    return "Successfully assigned grade of %s to %s for project %s" %(grade, student, project)
+    print "Successfully assigned grade of %s to %s for project %s" %(grade, student, project)
 
 def show_all_grades_for_student(student_name):
     query = """SELECT project_title, grade FROM Grades 

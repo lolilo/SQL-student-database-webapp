@@ -69,9 +69,24 @@ def made_new_project():
     html = "Project %s has been added to the database." % title
     return html
 
+@app.route("/assigngrade")
+def assign_grade():
+    html = render_template("assign_grade.html")
+    return html
 
-# TO DO
-# Make a handler that allows a user to grade a student on a given project.
+@app.route("/assignedgrade")
+def assigned_grade():
+    hackbright_app.connect_to_db()
+    student = request.args.get("student")
+    project = request.args.get("project")
+    grade = request.args.get("grade")
+    hackbright_app.give_grade_to_student(student, project, grade)
+
+    html = "Successfully assigned grade of %s for project %s to %s." % (grade, project, student)
+    return html
+
+
+# TO DO\
 # Add links to pages that allow you to navigate the entirety of the app 
 # you should never have to manually enter a URL to reach a particular handler.
 # Make it look pretty.
