@@ -3,6 +3,8 @@ import hackbright_app
 
 app = Flask(__name__)
 
+# ASK HOW TO PREVENT SQL INJECTIONS
+
 @app.route("/")
 def get_github():
     return render_template("get_github.html")
