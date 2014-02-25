@@ -1,47 +1,79 @@
 <html>
-<body>
-<h1> Student: {{first_name}}, {{last_name}}</h1>
-<h2>Github: {{github}}</h2>
+<head>
+    <style>
+        div#wrapper {
+            padding: 10px;
+            float:left;
+            width: 900px;
+            margin: -1px 0px 0px 0px;
+            border: solid blue 10px;
+        }
 
-<!-- Project: {{project}} 
-<br>Grade: {{grade}}</br> -->
+        div#projects{
+            margin: 10px 10px 10px 10px;
+            width: 160px;
+            height: 250px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            float:left;
+            border: solid red 3px;
+        }
+
+        div#github{
+            width: 160px;
+            height: 250px;
+            margin: 10px 10px 10px 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            float:left;
+            border: solid red 3px;
+            }
+
+        div#grades{
+            width: 160px;
+            height: 250px;
+            margin: 10px 10px 10px 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            float:left;
+            border: solid red 3px;
+            }
+
+    </style>
+</head>
+
+<body>
+<h1> Project: {{project_title}}</h1>
 
 <div id="wrapper">
-    <div id="header">
-        <p> This is the header! </p> 
-    </div>
+
+<!-- project_data is a dictionary with student names as keys and grades as values -->
 
     <div id="projects">
-        <p> Project</p>
+        <p><h2> Student </h2></p>
+            {% for student in project_data.keys() %}
+                <p> {{student[0]}}         </a></p>
+            {% endfor %}
     </div>
+
+    <div id="github">
+        <p><h2> Github </h2></p>
+            {% for student in project_data.keys() %}
+                <p> <a href="/student?github={{student[1]}}"> {{student[1]}}         </a></p>
+            {% endfor %}
+    </div>
+
 
     <div id="grades">
-        <p> Grade </p>
+        <p><h2> Grade </h2></p>
+            {% for student in project_data.keys() %}
+                <p>{{project_data[student]}}           </p>
+            {% endfor %}
     </div>
 </div>
-
-
-<div> 
-
-{% for project in project_data.keys() %}
-  <p>Project: {{project}}           </p>
-  <p>Grade: {{project_data[project]}} </p>
-  
-{% endfor %}
-</div>
-
-<div> 
-{% for project in project_data.keys() %}
-  <p>Project: {{project}}           </p>
-  <p>Grade: {{project_data[project]}} </p>
-  
-{% endfor %}
-</div>
-<!-- 
-
-<P> Bla bla stuff about student</p>
-<p> A recommendation for student</p> -->
-
 
 
 </body>

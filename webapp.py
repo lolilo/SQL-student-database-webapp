@@ -8,6 +8,7 @@ def get_github():
     return render_template("get_github.html")
 
 @app.route("/student")
+# page listing given student's projects and grades
 def get_student():
     hackbright_app.connect_to_db()
     student_github = request.args.get("github")
@@ -19,15 +20,60 @@ def get_student():
                                                 project_data = d2)
     return html
 
-# @app.route("/projects")
-# # page listing all students and their grades for that particular project 
-# def get_student():
-#     hackbright_app.connect_to_db()
-#     project = request.args.get("project")
-#     d1 = hackbright_app.get_grade_by_project(project)
+@app.route("/projects")
+# page listing all students and their grades for a given project 
+# when clicking on a student's github account, it sends you back to the get_student handler
+def get_grade_by_project():
+    hackbright_app.connect_to_db()
+    project = request.args.get("project")
+    d = hackbright_app.get_grade_by_project(project)
 
-#     html = render_template("student_info.html", project_data = d2)
-#     return html
+    html = render_template("project_grades.html", project_title = project, project_data = d)
+    return html
+
+
+@app.route("/createstudent")
+def make_new_student():
+#     html = """<form action="/some_webpage" method="GET">
+#     First Name: <input type="text" name="first_name">
+#     Last Name: <input type="text" name="last_name">
+#     Github: <input type="text" name="github">
+# </form>"""
+
+    html = render_template("create_student.html")
+    return html
+
+@app.route("/createstudentsuccess")
+# http://localhost:5000/createstudentsuccess?first_name=ha&last_name=yo
+# http://localhost:5000/createstudentsuccess?first_name=s&last_name=f&github=d
+# if extra arguments, doesn't matter? That github argument. 
+# Yes, this is true. Think for moment, LiLo. -__- Jeez. You can pass args in and not use them.
+def made_new_student():
+    hackbright_app.connect_to_db()
+    first_name = request.args.get("first_name")
+    last_name = request.args.get("last_name")
+    github = request.args.get("github")
+    hackbright_app.make_new_student(first_name, last_name, github)
+
+    html = "Student %s %s has been added to the database." % (first_name, last_name)
+    return html
+
+# Yeah, stub those functions.
+@app.route("/newproject")
+def make_new_project():
+    html = render_template("create_project.html")
+    return html
+
+@app.route("/newprojectsuccess")
+def made_new_project():
+    hackbright_app.connect_to_db()
+    title = request.args.get("title")
+    desc = request.args.get("description")
+    max_grade = request.args.get("max_grade")
+    hackbright_app.make_new_project(title, desc, max_grade)
+
+    html = "Project %s has been added to the database." % title
+    return html
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ def make_new_student(first_name, last_name, github):
     
     # committing on the database connection, not the cursor
     CONN.commit()
-    return "Successfully added student: %s %s" % (first_name, last_name)
+    print "Successfully added student: %s %s" % (first_name, last_name)
 
 def get_project_by_title(title):
     query = """SELECT * FROM Projects WHERE title = ?"""
@@ -49,13 +49,20 @@ def make_new_project(title, description, max_grade):
     CONN.commit()
     return "Successfully added project: %s" % title
 
-def get_grade_by_project(title, student):
-    query = """SELECT grade FROM Grades JOIN Students ON student_github = github WHERE project_title = ?"""
+def get_grade_by_project(title):
+    query = """SELECT first_name, grade, github FROM Grades JOIN Students ON student_github = github WHERE project_title = ?"""
     DB.execute(query, (title,))
-    row = DB.fetchone()
-    # return row
-    return """\
-    Grade: %s""" % row[0]    
+    rows = DB.fetchall()
+
+    d = {}
+    for row in rows:
+        # There should not be any double entries for keys
+        # each student should at most have one grade entry for each project
+        # keys of dictionary are tuples of (student name, github)
+        d[row[0], row[2]] = row[1]
+    return d
+    # return """\
+    # Grade: %s""" % row[0]    
 
 def give_grade_to_student(student, project, grade):
     query = """INSERT into Grades VALUES (
