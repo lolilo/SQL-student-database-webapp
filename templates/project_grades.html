@@ -1,0 +1,49 @@
+<html>
+<body>
+<h1> Student: {{first_name}}, {{last_name}}</h1>
+<h2>Github: {{github}}</h2>
+
+<!-- Project: {{project}} 
+<br>Grade: {{grade}}</br> -->
+
+<div id="wrapper">
+    <div id="header">
+        <p> This is the header! </p> 
+    </div>
+
+    <div id="projects">
+        <p> Project</p>
+    </div>
+
+    <div id="grades">
+        <p> Grade </p>
+    </div>
+</div>
+
+
+<div> 
+
+{% for project in project_data.keys() %}
+  <p>Project: {{project}}           </p>
+  <p>Grade: {{project_data[project]}} </p>
+  
+{% endfor %}
+</div>
+
+<div> 
+{% for project in project_data.keys() %}
+  <p>Project: {{project}}           </p>
+  <p>Grade: {{project_data[project]}} </p>
+  
+{% endfor %}
+</div>
+<!-- 
+
+<P> Bla bla stuff about student</p>
+<p> A recommendation for student</p> -->
+
+
+
+</body>
+</html>
+

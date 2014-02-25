@@ -8,7 +8,11 @@ def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
     DB.execute(query, (github,))
     row = DB.fetchone()
-    return row
+    # return row
+    d = {"first name": row[0], "last name": row[1], "github": row[2]}
+
+    return d
+    # print d['first name']
 
     # this '\' tells Python to not worry about whitespace, in this particular instance, a new line
 #     return """\
@@ -46,7 +50,7 @@ def make_new_project(title, description, max_grade):
     return "Successfully added project: %s" % title
 
 def get_grade_by_project(title, student):
-    query = """SELECT grade FROM Grades JOIN Students ON student_github = github lWHERE project_title = ?"""
+    query = """SELECT grade FROM Grades JOIN Students ON student_github = github WHERE project_title = ?"""
     DB.execute(query, (title,))
     row = DB.fetchone()
     # return row
@@ -66,11 +70,17 @@ def show_all_grades_for_student(student_name):
         (SELECT DISTINCT github FROM Students WHERE first_name = ?)"""  
     DB.execute(query, (student_name,))
     rows = DB.fetchall()
-    return rows
-    
+    # return rows
+
     # return '%s\'s grades: ' % student_name
     # for i in rows:
     #     return "%s: %s" % (i[0], i[1])
+
+    # return a dictionary where the keys are project names and the values are grades
+    d = {}
+    for i in rows:
+        d[i[0]] = i[1]
+    return d
 
 def main():
     connect_to_db()
@@ -103,7 +113,6 @@ def main():
         elif command == "show_student_grades":
             show_all_grades_for_student(*args)      
 
-          
 
     CONN.close()
 

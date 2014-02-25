@@ -1,19 +1,77 @@
 <html>
+<head>
+    <style>
+        div#wrapper {
+            padding: 10px;
+            float:left;
+            width: 900px;
+            margin: -1px 0px 0px 0px;
+            border: solid blue 10px;
+        }
+
+        div#projects{
+            margin: 10px 10px 10px 10px;
+            width: 160px;
+            height: 250px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            float:left;
+            border: solid red 3px;
+        }
+        div#grades{
+            width: 160px;
+            height: 250px;
+            margin: 10px 10px 10px 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            float:left;
+            border: solid red 3px;
+            }
+
+    </style>
+</head>
+
 <body>
-<h1> Student: {{first_name}}, {{last_name}}</h1>
+<h1> Student: {{first_name}} {{last_name}}</h1>
 <h2>Github: {{github}}</h2>
 
-Project: {{project}} 
-<br>Grade: {{grade}}</br>
+<div id="wrapper">
+    <div id="projects">
+        <p><h2> Project </h2></p>
+            {% for project in project_data.keys() %}
+                <p> <a href="/projects?project={{project}}"> {{project}}         </a></p>
+            {% endfor %}
+    </div>
 
-{% for grade in grades %}
-  <p>Grade: {{grade}}</p>
-  <a href="/student?github={{ grade['github'] }}"> {{ grade['firstname'] }} </a>
+    <div id="grades">
+        <p><h2> Grade </h2></p>
+            {% for project in project_data.keys() %}
+                <p>{{project_data[project]}}           </p>
+            {% endfor %}
+    </div>
+
+
+</div>
+
+
+
+<!-- 
+<p>
+<div>
+{% for project in project_data.keys() %}
+  <p>Project: {{project}}           </p>
+  <p>Grade: {{project_data[project]}} </p>
+  
 {% endfor %}
 
 
 <P> Bla bla stuff about student</p>
 <p> A recommendation for student</p>
+</div>
+</p> -->
+
 </body>
 </html>
 
