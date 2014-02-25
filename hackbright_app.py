@@ -3,6 +3,11 @@ import sqlite3
 DB = None
 CONN = None
 
+# parameterized SQL -- uses the question mark rather than string %s
+# wraps in quotes -- automatically converts to string. prevents SQL injection attacks
+# in other languages -- we can prevent attacks by using a list of 'black words' - blacklist words
+# in addition to stuff like "DROP Table", curse words can be included in blacklist words. :p 
+
 
 def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
